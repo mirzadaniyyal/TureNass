@@ -1,0 +1,24 @@
+TRUE nass Installation
+In This Page i will show you how to install TrueNass
+Go to the official website of the truenass and download truenass ISO file.
+Upload the ISO file in Proxmox
+Create a VM In Proxmox Using a TrueNass Core ISO file with 8gb ram, 2 processor cores and SCSI storage type but do not start it yet.
+login to your Proxmox server via .SSH.
+Type the following command.
+lsblk -o +MODEL,SERIAL 
+
+it will list all the drives with their model and serial number and hard drives will be listed as sda and sdb
+
+ls /dev/disk/by-id
+
+it will show you the hard drives connected to your motherboard.
+
+sata drives are listed as follows: ata 0r if it is not listed as ata it will be listed with scsi
+Add the sata drives by running following command
+qm set 103 -scsi2 /dev/disk/by-id/ata-ST3250318AS_9VY9660G
+
+103 is a id of vm
+scsi2 is the storage type
+ata-ST3250318AS_9VY9660G is the hard drive model and serial number
+Add all the drives using the same command but with minor changes like previous hard was added using scsci 2 the next drive will be added with scsi 3 and its serial and model & so on.
+Start the VM and install TrueNass Core
